@@ -30,4 +30,4 @@
 
 ### ERD
 
-![erd](C:\workspace\rabs\erd.png)
+![image](https://user-images.githubusercontent.com/37204770/154981060-c670c8d2-f383-4bf8-8e26-96d9d9825682.png)
