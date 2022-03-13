@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/rab
+    username: root
+    password: password
+
+  jpa:
+    show-sql: true
+    properties:
+      format_sql: true
