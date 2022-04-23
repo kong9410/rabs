@@ -2,7 +2,7 @@ package com.kong.rabs.user.service;
 
 import com.kong.rabs.exception.ErrorType;
 import com.kong.rabs.exception.RabsException;
-import com.kong.rabs.user.entity.User;
+import com.kong.rabs.user.entity.RabsUser;
 import com.kong.rabs.user.model.UserParam;
 import com.kong.rabs.user.repo.UserRepository;
 import javax.transaction.Transactional;
@@ -17,17 +17,16 @@ public class UserService {
     }
 
     @Transactional
-    public boolean addUser(UserParam userParam) {
-        userRepository.findByAccount(userParam.getAccount())
-            .orElseThrow(() -> new RabsException(ErrorType.USER_ALREADY_EXISTS));
+    public void addUser(UserParam userParam) {
+        if (userRepository.findByAccount(userParam.getAccount()).isPresent()) {
+            throw new RabsException(ErrorType.USER_ALREADY_EXISTS);
+        }
 
-        User newUser = User.builder()
+        RabsUser newRabsUser = RabsUser.builder()
             .account(userParam.getAccount())
             .password(userParam.getPassword())
             .build();
 
-        userRepository.save(newUser);
-
-        return true;
+        userRepository.save(newRabsUser);
     }
 }

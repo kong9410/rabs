@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor
-public class User {
+public class RabsUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,7 +25,7 @@ public class User {
     private String password;
 
     @Builder
-    public User(String account, String password) {
+    public RabsUser(String account, String password) {
         this.account = account;
         this.password = password;
     }

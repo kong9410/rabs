@@ -18,7 +18,7 @@ public class RegisterController {
     }
 
     @PostMapping("/user")
-    public boolean registerUser(@RequestBody @Valid UserParam userParam) {
-        return userService.addUser(userParam);
+    public void registerUser(@RequestBody @Valid UserParam userParam) {
+        userService.addUser(userParam);
     }
 }
