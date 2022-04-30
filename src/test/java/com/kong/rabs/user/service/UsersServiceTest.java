@@ -7,7 +7,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.kong.rabs.exception.RabsException;
-import com.kong.rabs.user.entity.RabsUser;
+import com.kong.rabs.user.entity.Users;
 import com.kong.rabs.user.model.UserParam;
 import com.kong.rabs.user.repo.UserRepository;
 import java.util.Optional;
@@ -18,7 +18,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-class RabsUserServiceTest {
+class UsersServiceTest {
     @InjectMocks
     UserService userService;
     @Mock
@@ -30,23 +30,23 @@ class RabsUserServiceTest {
 
         when(userRepository.findByAccount(userParam.getAccount())).thenReturn(Optional.empty());
 
-        userService.addUser(userParam);
+        userService.saveUser(userParam);
 
         verify(userRepository).findByAccount(userParam.getAccount());
-        verify(userRepository).save(any(RabsUser.class));
+        verify(userRepository).save(any(Users.class));
     }
 
     @Test
     void addUser_AlreadyExists() {
         UserParam userParam = new UserParam();
 
-        RabsUser rabsUser = new RabsUser();
+        Users users = new Users();
 
-        when(userRepository.findByAccount(userParam.getAccount())).thenReturn(Optional.of(rabsUser));
+        when(userRepository.findByAccount(userParam.getAccount())).thenReturn(Optional.of(users));
 
-        assertThrows(RabsException.class, () -> userService.addUser(userParam));
+        assertThrows(RabsException.class, () -> userService.saveUser(userParam));
 
         verify(userRepository).findByAccount(userParam.getAccount());
-        verify(userRepository, times(0)).save(any(RabsUser.class));
+        verify(userRepository, times(0)).save(any(Users.class));
     }
 }

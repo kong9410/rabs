@@ -6,27 +6,29 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
-import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor
-public class RabsUser {
+@Getter
+public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false, unique = true, length = 25)
     @NotBlank
-    private String account;
+    private String username;
 
-    @Column(nullable = false, length = 25)
+    @Column(nullable = false, length = 100)
     @NotBlank
     private String password;
 
-    @Builder
-    public RabsUser(String account, String password) {
-        this.account = account;
+    private String role;
+
+    public Users(String username, String password) {
+        this.username = username;
         this.password = password;
     }
 }

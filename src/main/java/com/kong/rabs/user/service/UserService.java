@@ -2,31 +2,28 @@ package com.kong.rabs.user.service;
 
 import com.kong.rabs.exception.ErrorType;
 import com.kong.rabs.exception.RabsException;
-import com.kong.rabs.user.entity.RabsUser;
+import com.kong.rabs.user.entity.Users;
 import com.kong.rabs.user.model.UserParam;
 import com.kong.rabs.user.repo.UserRepository;
 import javax.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
-
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public void addUser(UserParam userParam) {
+    public void saveUser(UserParam userParam) {
         if (userRepository.findByAccount(userParam.getAccount()).isPresent()) {
             throw new RabsException(ErrorType.USER_ALREADY_EXISTS);
         }
 
-        RabsUser newRabsUser = RabsUser.builder()
-            .account(userParam.getAccount())
-            .password(userParam.getPassword())
-            .build();
+        Users users = new Users(userParam.getAccount(), passwordEncoder.encode(userParam.getPassword()));
 
-        userRepository.save(newRabsUser);
+        userRepository.save(users);
     }
 }
