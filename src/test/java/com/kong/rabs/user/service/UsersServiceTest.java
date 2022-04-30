@@ -28,11 +28,11 @@ class UsersServiceTest {
     void addUser() {
         UserParam userParam = new UserParam();
 
-        when(userRepository.findByAccount(userParam.getAccount())).thenReturn(Optional.empty());
+        when(userRepository.findByUsername(userParam.getUsername())).thenReturn(Optional.empty());
 
         userService.saveUser(userParam);
 
-        verify(userRepository).findByAccount(userParam.getAccount());
+        verify(userRepository).findByUsername(userParam.getUsername());
         verify(userRepository).save(any(Users.class));
     }
 
@@ -42,11 +42,11 @@ class UsersServiceTest {
 
         Users users = new Users();
 
-        when(userRepository.findByAccount(userParam.getAccount())).thenReturn(Optional.of(users));
+        when(userRepository.findByUsername(userParam.getUsername())).thenReturn(Optional.of(users));
 
         assertThrows(RabsException.class, () -> userService.saveUser(userParam));
 
-        verify(userRepository).findByAccount(userParam.getAccount());
+        verify(userRepository).findByUsername(userParam.getUsername());
         verify(userRepository, times(0)).save(any(Users.class));
     }
 }

@@ -18,11 +18,11 @@ public class UserService {
 
     @Transactional
     public void saveUser(UserParam userParam) {
-        if (userRepository.findByAccount(userParam.getAccount()).isPresent()) {
+        if (userRepository.findByUsername(userParam.getUsername()).isPresent()) {
             throw new RabsException(ErrorType.USER_ALREADY_EXISTS);
         }
 
-        Users users = new Users(userParam.getAccount(), passwordEncoder.encode(userParam.getPassword()));
+        Users users = new Users(userParam.getUsername(), passwordEncoder.encode(userParam.getPassword()));
 
         userRepository.save(users);
     }

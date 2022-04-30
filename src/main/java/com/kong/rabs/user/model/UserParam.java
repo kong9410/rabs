@@ -8,7 +8,7 @@ import org.hibernate.validator.constraints.Length;
 public class UserParam {
     @NotBlank
     @Length(min = 4, max = 25)
-    private String account;
+    private String username;
     @NotBlank
     @Length(min = 6, max = 25)
     private String password;
