@@ -1,8 +1,8 @@
 package com.kong.rabs.exception;
 
 import java.util.Objects;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -17,6 +17,13 @@ public class ExceptionControllerAdvice {
             errorResponse = ErrorResponse.of(e.getErrorType());
         }
 
-        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errorResponse, errorResponse.getErrorType().getHttpStatus());
+    }
+
+    @ExceptionHandler(UsernameNotFoundException.class)
+    public ResponseEntity<ErrorResponse> usernameNotFoundException() {
+        ErrorResponse errorResponse = ErrorResponse.of(ErrorType.USERNAME_NOT_FOUND);
+
+        return new ResponseEntity<>(errorResponse, errorResponse.getErrorType().getHttpStatus());
     }
 }

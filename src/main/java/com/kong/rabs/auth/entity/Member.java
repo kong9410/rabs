@@ -1,10 +1,14 @@
-package com.kong.rabs.user.entity;
+package com.kong.rabs.auth.entity;
 
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @Getter
-public class Users {
+public class Member {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,10 +29,17 @@ public class Users {
     @NotBlank
     private String password;
 
-    private String role;
+    @ManyToMany
+    @JoinTable(
+        name = "member_authority",
+        joinColumns = {@JoinColumn(name = "member_id", referencedColumnName = "id")},
+        inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "authority_name")}
+    )
+    private Set<Authority> authorities;
 
-    public Users(String username, String password) {
+    public Member(String username, String password, Set<Authority> authorities) {
         this.username = username;
         this.password = password;
+        this.authorities = authorities;
     }
 }
