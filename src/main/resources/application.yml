@@ -21,7 +21,7 @@ spring:
 
 jwt:
   secret: reviewandbuyspringwebsecretkeyfrom20220623015500zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
-  token-validity-in-seconds: 86400
+  token-validity-in-seconds: 600
 
 server:
   shutdown: graceful
